@@ -3,9 +3,15 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
+
+
 android {
     namespace 'com.tonykuz.findfilm'
     compileSdk 33
+
+    buildFeatures{
+        viewBinding true
+    }
 
     defaultConfig {
         applicationId "com.tonykuz.findfilm"

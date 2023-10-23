@@ -27,6 +27,7 @@ class HomeFragment : Fragment() {
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
     private lateinit var binding: FragmentHomeBinding
 
+
     val filmsDataBase = listOf(
         Film(
             "Список Шиндлера",
@@ -90,22 +91,25 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding.mainRecycler.layoutManager = LinearLayoutManager(requireActivity())
+
         initHomeFragment()
         return binding.root
     }
 
-        //находим наш RV
-        private fun initHomeFragment() {
-            filmsAdapter = FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
-                    override fun click(film: Film) {
-                        (requireActivity() as MainActivity).launchDetailsFragment(film)
-                    }
-                })
-            filmsAdapter.addItems(filmsDataBase)
-            //Присваиваем адаптер
-            binding.mainRecycler.adapter = filmsAdapter
-            //Применяем декоратор для отступов
-            val decorator = TopSpacingItemDecoration(8)
-            binding.mainRecycler.addItemDecoration(decorator)
-        }
+    //находим наш RV
+    private fun initHomeFragment() {
+        filmsAdapter =
+            FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
+                override fun click(film: Film) {
+                    (requireActivity() as MainActivity).launchDetailsFragment(film)
+                }
+            })
+        filmsAdapter.addItems(filmsDataBase)
+        //Присваиваем адаптер
+        binding.mainRecycler.adapter = filmsAdapter
+        //Применяем декоратор для отступов
+        val decorator = TopSpacingItemDecoration(8)
+        binding.mainRecycler.addItemDecoration(decorator)
     }
+}

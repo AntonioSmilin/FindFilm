@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack(null)
             .commit()
     }
+
     fun launchDetailsFragment(film: Film) {
         //Создаем "посылку"
         val bundle = Bundle()
@@ -47,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initNavigation() {
-       binding.bottomNavigation.setOnItemSelectedListener {
+        binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.favorites -> {
                     Toast.makeText(this, "Избранное", Toast.LENGTH_SHORT).show()
@@ -65,13 +66,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount <= 1) {
             if (backPressed + TIME_INTERVAL > System.currentTimeMillis()) {
                 super.onBackPressed()
                 finish()
             } else {
-                Toast.makeText(this, getString(R.string.double_back_toast), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.double_back_toast), Toast.LENGTH_SHORT)
+                    .show()
             }
 
             backPressed = System.currentTimeMillis()

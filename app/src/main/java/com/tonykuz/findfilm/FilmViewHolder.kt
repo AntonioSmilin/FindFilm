@@ -10,11 +10,9 @@ import androidx.viewbinding.ViewBinding
 import com.tonykuz.findfilm.databinding.FilmItemBinding
 
 //В конструктор класс передается layout, который мы создали(film_item.xml)
-class FilmViewHolder(itemView: View) : ViewHolder(itemView) {
+class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     val filmBinding = FilmItemBinding.bind(itemView)
-
-
 
     //В этом методе кладем данные из Film в наши View
     fun bind(film: Film) {

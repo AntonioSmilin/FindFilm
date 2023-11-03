@@ -27,7 +27,6 @@ class HomeFragment : Fragment() {
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
     private lateinit var binding: FragmentHomeBinding
 
-
     val filmsDataBase = listOf(
         Film(
             "Список Шиндлера",
@@ -84,6 +83,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
+
     }
 
     override fun onCreateView(
@@ -95,6 +95,38 @@ class HomeFragment : Fragment() {
 
         initHomeFragment()
         return binding.root
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.searchView.setOnClickListener {
+            binding.searchView.isIconified = false
+            }
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            //Этот метод отрабатывает при нажатии кнопки "поиск" на софт клавиатуре
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+            //Этот метод отрабатывает на каждое изменения текста
+            override fun onQueryTextChange(newText: String): Boolean {
+                if (newText.isEmpty()) {
+                    filmsAdapter.addItems(filmsDataBase)
+                    return true
+                }
+                //Фильтруем список на поиск подходящих сочетаний
+                val result = filmsDataBase.filter {
+                    //Чтобы все работало правильно, нужно и запрос, и имя фильма приводить к нижнему регистру
+                    it.title.lowercase(Locale.getDefault()).contains(newText.lowercase(Locale.getDefault()))
+                }
+
+                //Добавляем в адаптер
+                filmsAdapter.addItems(result)
+                return true
+            }
+        })
+
     }
 
     //находим наш RV
@@ -112,4 +144,5 @@ class HomeFragment : Fragment() {
         val decorator = TopSpacingItemDecoration(8)
         binding.mainRecycler.addItemDecoration(decorator)
     }
+
 }

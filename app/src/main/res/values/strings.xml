@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">FindFilm</string>
+    <string name="menu_home_title_text">Главная</string>
     <string name="menu_favorites_title">Избранное</string>
     <string name="menu_watch_later_title">Буду смотреть</string>
-    <string name="menu_selections_title">Подборка</string>
+    <string name="menu_selections_title">Подборки</string>
     <string name="double_back_toast">Нажмите дважды для выхода</string>
 
 </resources>

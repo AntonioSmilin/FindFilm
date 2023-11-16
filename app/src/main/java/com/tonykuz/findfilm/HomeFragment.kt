@@ -101,6 +101,9 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        AnimationHelper.performFragmentCircularRevealAnimation(binding.homeFragmentRoot, requireActivity(), 1)
+
         val scene = Scene(binding.homeFragmentRoot, binding2.root)
         // search view animation
         val searchSlide = Slide(Gravity.TOP).addTarget(R.id.searchView)

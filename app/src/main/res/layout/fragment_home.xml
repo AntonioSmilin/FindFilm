@@ -7,5 +7,28 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-    tools:background="@drawable/corner_background"
-    tools:context=".HomeFragment" />
+    android:background="@drawable/background_home"
+    android:visibility="invisible"
+    tools:visibility="visible"
+    tools:context=".HomeFragment">
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/background_search_view"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mainRecycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView"
+        tools:listitem="@layout/film_item" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.tonykuz.findfilm
+package com.tonykuz.findfilm.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,7 +6,12 @@ import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import android.view.ViewGroup
+import com.tonykuz.findfilm.domain.Film
+import com.tonykuz.findfilm.view.rv_adapters.FilmListRecyclerAdapter
+import com.tonykuz.findfilm.view.MainActivity
+import com.tonykuz.findfilm.view.rv_adapters.TopSpacingItemDecoration
 import com.tonykuz.findfilm.databinding.FragmentFavoritesBinding
+import com.tonykuz.findfilm.utils.AnimationHelper
 
 
 class FavoritesFragment : Fragment() {
@@ -28,7 +33,11 @@ class FavoritesFragment : Fragment() {
         //Получаем список при транзакции фрагмента
         val favoritesList: List<Film> = emptyList()
 
-        AnimationHelper.performFragmentCircularRevealAnimation(binding.favoritesFragmentRoot, requireActivity(),2)
+        AnimationHelper.performFragmentCircularRevealAnimation(
+            binding.favoritesFragmentRoot,
+            requireActivity(),
+            2
+        )
 
         binding.favoritesRecycler.apply {
             filmsAdapter =

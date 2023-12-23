@@ -1,10 +1,7 @@
-package com.tonykuz.findfilm
+package com.tonykuz.findfilm.view.fragments
 
 import android.os.Bundle
-import android.widget.Toast
-import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tonykuz.findfilm.databinding.ActivityMainBinding
 import com.tonykuz.findfilm.databinding.FragmentHomeBinding
 import android.view.LayoutInflater
 import android.view.View
@@ -14,64 +11,38 @@ import androidx.fragment.app.Fragment
 import com.tonykuz.findfilm.databinding.MergeHomeScreenContentBinding
 import java.util.Locale
 import android.view.Gravity
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.OnScrollListener
-import androidx.appcompat.widget.SearchView.OnQueryTextListener
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.transition.Scene
 import androidx.transition.Slide
-import androidx.transition.Transition
 import androidx.transition.TransitionManager
 import androidx.transition.TransitionSet
+import com.tonykuz.findfilm.*
+import com.tonykuz.findfilm.domain.Film
+import com.tonykuz.findfilm.utils.AnimationHelper
+import com.tonykuz.findfilm.view.MainActivity
+import com.tonykuz.findfilm.view.rv_adapters.FilmListRecyclerAdapter
+import com.tonykuz.findfilm.view.rv_adapters.TopSpacingItemDecoration
+import com.tonykuz.findfilm.viewmodel.HomeFragmentViewModel
 
 class HomeFragment : Fragment() {
 
     private lateinit var filmsAdapter: FilmListRecyclerAdapter
     private lateinit var binding: FragmentHomeBinding
     private lateinit var binding2: MergeHomeScreenContentBinding
-
-
-    val filmsDataBase = listOf(
-        Film(
-            "Список Шиндлера",
-            R.drawable.schindlerslist,
-            "In German-occupied Poland during World War II, industrialist Oskar Schindler gradually becomes concerned for his Jewish workforce after witnessing their persecution by the Nazis.", 7.7f),
-        Film(
-            "Бойцовский клуб",
-            R.drawable.fightclub,
-            "An insomniac office worker and a devil-may-care soap maker form an underground fight club that evolves into much more.", 9.3f),
-        Film(
-            "Начало",
-            R.drawable.inception,
-            "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.", 8.0f),
-        Film(
-            "Матрица",
-            R.drawable.matrix,
-            "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.", 9.0f),
-        Film(
-            "Семь",
-            R.drawable.se7en,
-            "Two detectives, a rookie and a veteran, hunt a serial killer who uses the seven deadly sins as his motives.", 8.5f),
-        Film(
-            "Интерстеллар",
-            R.drawable.interstellar,
-            "When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot, Joseph Cooper, is tasked to pilot a spacecraft, along with a team of researchers, to find a new planet for humans.", 8.2f),
-        Film(
-            "Зелёная миля",
-            R.drawable.greenmile,
-            "A tale set on death row in a Southern jail, where gentle giant John possesses the mysterious power to heal people's ailments. When the lead guard, Paul, recognizes John's gift, he tries to help stave off the condemned man's execution.", 7.4f),
-        Film(
-            "Терминатор 2: Судный день",
-            R.drawable.terminator2,
-            "A cyborg, identical to the one who failed to kill Sarah Connor, must now protect her ten year old son John from an even more advanced and powerful cyborg.",2.3f),
-        Film(
-            "Паразиты",
-            R.drawable.parasite,
-            "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.",8.1f),
-        Film(
-            "Король Лев",
-            R.drawable.lionking,
-            "Lion prince Simba and his father are targeted by his bitter uncle, who wants to ascend the throne himself.",4.5f)
-    )
+    private val viewModel by lazy {
+        ViewModelProvider.NewInstanceFactory().create(HomeFragmentViewModel::class.java)
+    }
+    private var filmsDataBase = listOf<Film>()
+        //Используем backing field
+        set(value) {
+            //Если придет такое же значение, то мы выходим из метода
+            if (field == value) return
+            //Если пришло другое значение, то кладем его в переменную
+            field = value
+            //Обновляем RV адаптер
+            filmsAdapter.addItems(field)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,9 +60,18 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.filmsListLiveData.observe(viewLifecycleOwner, Observer<List<Film>> {
+            filmsDataBase = it
+        })
+
         super.onViewCreated(view, savedInstanceState)
 
-        AnimationHelper.performFragmentCircularRevealAnimation(binding.homeFragmentRoot, requireActivity(), 1)
+
+        AnimationHelper.performFragmentCircularRevealAnimation(
+            binding.homeFragmentRoot,
+            requireActivity(),
+            1
+        )
 
         val scene = Scene(binding.homeFragmentRoot, binding2.root)
         // search view animation

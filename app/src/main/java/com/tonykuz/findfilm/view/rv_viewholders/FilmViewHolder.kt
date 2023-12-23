@@ -1,14 +1,10 @@
-package com.tonykuz.findfilm
+package com.tonykuz.findfilm.view.rv_viewholders
 
-import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.tonykuz.findfilm.databinding.FilmItemBinding
+import com.tonykuz.findfilm.domain.Film
 
 //В конструктор класс передается layout, который мы создали(film_item.xml)
 class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

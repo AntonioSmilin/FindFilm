@@ -1,4 +1,4 @@
-package com.tonykuz.findfilm
+package com.tonykuz.findfilm.domain
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

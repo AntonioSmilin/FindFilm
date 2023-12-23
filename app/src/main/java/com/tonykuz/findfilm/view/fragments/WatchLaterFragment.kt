@@ -1,11 +1,11 @@
-package com.yara.kinoapp
+package com.tonykuz.findfilm.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.tonykuz.findfilm.AnimationHelper
+import com.tonykuz.findfilm.utils.AnimationHelper
 import com.tonykuz.findfilm.databinding.FragmentWatchLaterBinding
 
 
@@ -22,6 +22,10 @@ class WatchLaterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AnimationHelper.performFragmentCircularRevealAnimation(binding.watchLaterFragmentRoot, requireActivity(), 3)
+        AnimationHelper.performFragmentCircularRevealAnimation(
+            binding.watchLaterFragmentRoot,
+            requireActivity(),
+            3
+        )
     }
 }

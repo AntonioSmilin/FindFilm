@@ -1,4 +1,4 @@
-package com.tonykuz.findfilm
+package com.tonykuz.findfilm.view.fragments
 
 import android.os.Bundle
 import com.tonykuz.findfilm.databinding.FragmentDetailsBinding
@@ -7,12 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import android.content.Intent
+import com.tonykuz.findfilm.domain.Film
+import com.tonykuz.findfilm.R
 
 class DetailsFragment : Fragment() {
     //private var detailBinding: FragmentDetailsBinding? = null
     private lateinit var binding: FragmentDetailsBinding
     private lateinit var film: Film
-
 
 
     override fun onCreateView(

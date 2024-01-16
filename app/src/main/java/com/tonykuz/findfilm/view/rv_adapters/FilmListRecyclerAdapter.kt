@@ -1,12 +1,16 @@
-package com.tonykuz.findfilm
+package com.tonykuz.findfilm.view.rv_adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.tonykuz.findfilm.view.rv_viewholders.FilmViewHolder
+import com.tonykuz.findfilm.R
+import com.tonykuz.findfilm.domain.Film
 
 
 //в параметр передаем слушатель, чтобы мы потом могли обрабатывать нажатия из класса Activity
-class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     //Здесь у нас хранится список элементов для RV
     private val items = mutableListOf<Film>()
 
@@ -15,7 +19,9 @@ class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) : 
 
     //В этом методе мы привязываем наш ViewHolder и передаем туда "надутую" верстку нашего фильма
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return FilmViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.film_item, parent, false))
+        return FilmViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.film_item, parent, false)
+        )
     }
 
     //В этом методе будет привязка полей из объекта Film к View из film_item.xml

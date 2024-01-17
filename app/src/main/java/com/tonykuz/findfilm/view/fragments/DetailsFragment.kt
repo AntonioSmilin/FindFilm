@@ -7,8 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import android.content.Intent
+import com.bumptech.glide.Glide
 import com.tonykuz.findfilm.domain.Film
 import com.tonykuz.findfilm.R
+import com.tonykuz.findfilm.data.ApiConstants
 
 class DetailsFragment : Fragment() {
     //private var detailBinding: FragmentDetailsBinding? = null
@@ -65,7 +67,11 @@ class DetailsFragment : Fragment() {
         //Устанавливаем заголовок
         binding.detailsToolbar.title = film.title
         //Устанавливаем картинку
-        binding.detailsPoster.setImageResource(film.poster)
+        Glide.with(this)
+            .load(ApiConstants.IMAGES_URL + "w780" + film.poster)
+            .centerCrop()
+            .into(binding.detailsPoster)
+        //binding.detailsPoster.setImageResource(film.poster)
         //Устанавливаем описание
         binding.detailsDescription.text = film.description
 

@@ -2,15 +2,15 @@ package com.tonykuz.findfilm.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.tonykuz.findfilm.App
 import com.tonykuz.findfilm.domain.Film
 import com.tonykuz.findfilm.domain.Interactor
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class HomeFragmentViewModel : ViewModel() {
-    val filmsListLiveData: MutableLiveData<List<Film>> = MutableLiveData()
-
+class HomeFragmentViewModel : ViewModel(), KoinComponent {
+    val filmsListLiveData:  MutableLiveData<List<Film>> = MutableLiveData()
     //Инициализируем интерактор
-    private var interactor: Interactor = App.instance.interactor
+    private val interactor: Interactor by inject()
 
     init {
         interactor.getFilmsFromApi(1, object : ApiCallback {

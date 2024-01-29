@@ -4,6 +4,7 @@ import com.tonykuz.findfilm.di.modules.DatabaseModule
 import com.tonykuz.findfilm.di.modules.DomainModule
 import com.tonykuz.findfilm.di.modules.RemoteModule
 import com.tonykuz.findfilm.viewmodel.HomeFragmentViewModel
+import com.tonykuz.findfilm.viewmodel.SettingsFragmentViewModel
 import dagger.Component
 import javax.inject.Singleton
 
@@ -17,6 +18,8 @@ import javax.inject.Singleton
     ]
 )
 interface AppComponent {
-    //метод для того, чтобы появилась внедрять зависимости в HomeFragmentViewModel
+    //метод для того, чтобы появилась возможность внедрять зависимости в HomeFragmentViewModel
     fun inject(homeFragmentViewModel: HomeFragmentViewModel)
+    //метод для того, чтобы появилась возможность внедрять зависимости в SettingsFragmentViewModel
+    fun inject(settingsFragmentViewModel: SettingsFragmentViewModel)
 }

@@ -60,9 +60,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.filmsListLiveData.observe(viewLifecycleOwner, Observer<List<Film>> {
-            filmsDataBase = it
-        })
+
 
         super.onViewCreated(view, savedInstanceState)
 
@@ -73,68 +71,96 @@ class HomeFragment : Fragment() {
             1
         )
 
-        val scene = Scene(binding.homeFragmentRoot, binding2.root)
-        // search view animation
-        val searchSlide = Slide(Gravity.TOP).addTarget(R.id.searchView)
-        // RV animation
-        val recyclerSlide = Slide(Gravity.BOTTOM).addTarget(R.id.mainRecycler)
-        val customTransition = TransitionSet().apply {
-            duration = 500
-            addTransition(recyclerSlide)
-            addTransition(searchSlide)
-        }
-
-        TransitionManager.go(scene, customTransition)
-
-        binding2.searchView.setOnClickListener {
-            binding2.searchView.isIconified = false
-        }
-
-
-        binding2.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            //Этот метод отрабатывает при нажатии кнопки "поиск" на софт клавиатуре
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return true
-            }
-
-            //Этот метод отрабатывает на каждое изменения текста
-            override fun onQueryTextChange(newText: String): Boolean {
-                if (newText.isEmpty()) {
-                    filmsAdapter.addItems(filmsDataBase)
-                    return true
-                }
-                //Фильтруем список на поиск подходящих сочетаний
-                val result = filmsDataBase.filter {
-                    //Чтобы все работало правильно, нужно и запрос, и имя фильма приводить к нижнему регистру
-                    it.title.lowercase(Locale.getDefault())
-                        .contains(newText.lowercase(Locale.getDefault()))
-                }
-
-                //Добавляем в адаптер
-                filmsAdapter.addItems(result)
-                return true
-            }
+        initSearchView()
+        initPullToRefresh()
+        //находим наш RV
+        initRecycler()//Кладем нашу БД в RV
+        viewModel.filmsListLiveData.observe(viewLifecycleOwner, Observer<List<Film>> {
+            filmsDataBase = it
+            filmsAdapter.addItems(it)
         })
 
-        initRecycler()
-        filmsAdapter.addItems(filmsDataBase)
-    }
+        private fun initPullToRefresh() {
+            //Вешаем слушатель, чтобы вызвался pull to refresh
+            binding.pullToRefresh.setOnRefreshListener {
+                //Чистим адаптер(items нужно будет сделать паблик или создать для этого публичный метод)
+                filmsAdapter.items.clear()
+                //Делаем новый запрос фильмов на сервер
+                viewModel.getFilms()
+                //Убираем крутящееся колечко
+                binding.pullToRefresh.isRefreshing = false
+            }
+        }
 
-    private fun initRecycler() {
-        // get RV
-        binding2.mainRecycler.apply {
-            filmsAdapter =
-                FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
-                    override fun click(film: Film) {
-                        (requireActivity() as MainActivity).launchDetailsFragment(film)
+        private fun initSearchView() {
+            search_view.setOnClickListener {
+                search_view.isIconified = false
+
+                val scene = Scene(binding.homeFragmentRoot, binding2.root)
+                // search view animation
+                val searchSlide = Slide(Gravity.TOP).addTarget(R.id.searchView)
+                // RV animation
+                val recyclerSlide = Slide(Gravity.BOTTOM).addTarget(R.id.mainRecycler)
+                val customTransition = TransitionSet().apply {
+                    duration = 500
+                    addTransition(recyclerSlide)
+                    addTransition(searchSlide)
+                }
+
+                TransitionManager.go(scene, customTransition)
+
+                binding2.searchView.setOnClickListener {
+                    binding2.searchView.isIconified = false
+                }
+
+
+                binding2.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    //Этот метод отрабатывает при нажатии кнопки "поиск" на софт клавиатуре
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        return true
+                    }
+
+                    //Этот метод отрабатывает на каждое изменения текста
+                    override fun onQueryTextChange(newText: String): Boolean {
+                        if (newText.isEmpty()) {
+                            filmsAdapter.addItems(filmsDataBase)
+                            return true
+                        }
+                        //Фильтруем список на поиск подходящих сочетаний
+                        val result = filmsDataBase.filter {
+                            //Чтобы все работало правильно, нужно и запрос, и имя фильма приводить к нижнему регистру
+                            it.title.lowercase(Locale.getDefault())
+                                .contains(newText.lowercase(Locale.getDefault()))
+                        }
+
+                        //Добавляем в адаптер
+                        filmsAdapter.addItems(result)
+                        return true
                     }
                 })
 
-            adapter = filmsAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-            val decorator = TopSpacingItemDecoration(8)
-            addItemDecoration(decorator)
+                initRecycler()
+                filmsAdapter.addItems(filmsDataBase)
+            }
+
+            private fun initRecycler() {
+                // get RV
+                binding2.mainRecycler.apply {
+                    filmsAdapter =
+                        FilmListRecyclerAdapter(object :
+                            FilmListRecyclerAdapter.OnItemClickListener {
+                            override fun click(film: Film) {
+                                (requireActivity() as MainActivity).launchDetailsFragment(film)
+                            }
+                        })
+
+                    adapter = filmsAdapter
+                    layoutManager = LinearLayoutManager(requireContext())
+                    val decorator = TopSpacingItemDecoration(8)
+                    addItemDecoration(decorator)
+                }
+            }
+
         }
     }
-
 }

@@ -7,11 +7,7 @@ import androidx.fragment.app.Fragment
 import com.tonykuz.findfilm.R
 import com.tonykuz.findfilm.databinding.ActivityMainBinding
 import com.tonykuz.findfilm.domain.Film
-import com.tonykuz.findfilm.view.fragments.DetailsFragment
-import com.tonykuz.findfilm.view.fragments.FavoritesFragment
-import com.tonykuz.findfilm.view.fragments.HomeFragment
-import com.tonykuz.findfilm.view.fragments.SelectionsFragment
-import com.tonykuz.findfilm.view.fragments.WatchLaterFragment
+import com.tonykuz.findfilm.view.fragments.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -84,6 +80,12 @@ class MainActivity : AppCompatActivity() {
                     val fragment = checkFragmentExistence(tag)
                     changeFragment(fragment ?: SelectionsFragment(), tag)
                     Toast.makeText(this, "Подборки", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.settings -> {
+                    val tag = "settings"
+                    val fragment = checkFragmentExistence(tag)
+                    changeFragment( fragment?: SettingsFragment(), tag)
                     true
                 }
                 else -> false

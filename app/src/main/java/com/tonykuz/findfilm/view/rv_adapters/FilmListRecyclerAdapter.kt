@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tonykuz.findfilm.view.rv_viewholders.FilmViewHolder
 import com.tonykuz.findfilm.R
-import com.tonykuz.findfilm.domain.Film
+import com.tonykuz.findfilm.data.Entity.Film
 
 
 //в параметр передаем слушатель, чтобы мы потом могли обрабатывать нажатия из класса Activity

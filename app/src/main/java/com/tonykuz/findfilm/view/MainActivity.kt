@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.tonykuz.findfilm.R
 import com.tonykuz.findfilm.databinding.ActivityMainBinding
-import com.tonykuz.findfilm.domain.Film
+import com.tonykuz.findfilm.data.Entity.Film
 import com.tonykuz.findfilm.view.fragments.*
 
 class MainActivity : AppCompatActivity() {

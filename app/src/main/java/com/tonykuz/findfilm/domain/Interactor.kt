@@ -1,6 +1,7 @@
 package com.tonykuz.findfilm.domain
 
 import com.tonykuz.findfilm.data.*
+import com.tonykuz.findfilm.data.Entity.Film
 import com.tonykuz.findfilm.data.Entity.TmdbResultsDto
 import com.tonykuz.findfilm.data.MainRepository
 import com.tonykuz.findfilm.data.TmdbApi
@@ -20,7 +21,7 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
             val list = Converter.convertApiListToDtoList(response.body()?.tmdbFilms)
             //Кладем фильмы в бд
             list.forEach {
-                repo.putToDb(film = it)
+                repo.putToDb(list)
             }
             callback.onSuccess(list)
         }

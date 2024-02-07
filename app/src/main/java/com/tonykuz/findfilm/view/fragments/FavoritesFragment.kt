@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import android.view.ViewGroup
-import com.tonykuz.findfilm.domain.Film
+import com.tonykuz.findfilm.data.Entity.Film
 import com.tonykuz.findfilm.view.rv_adapters.FilmListRecyclerAdapter
 import com.tonykuz.findfilm.view.MainActivity
 import com.tonykuz.findfilm.view.rv_adapters.TopSpacingItemDecoration

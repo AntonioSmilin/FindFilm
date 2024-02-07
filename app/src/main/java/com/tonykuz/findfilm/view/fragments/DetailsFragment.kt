@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import android.content.Intent
 import com.bumptech.glide.Glide
-import com.tonykuz.findfilm.domain.Film
+import com.tonykuz.findfilm.data.Entity.Film
 import com.tonykuz.findfilm.R
 import com.tonykuz.findfilm.data.ApiConstants
 

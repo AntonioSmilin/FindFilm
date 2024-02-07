@@ -19,8 +19,7 @@ import androidx.lifecycle.ViewModelProvider
 //import androidx.transition.TransitionManager
 //import androidx.transition.TransitionSet
 //import com.tonykuz.findfilm.*
-import com.tonykuz.findfilm.R
-import com.tonykuz.findfilm.domain.Film
+import com.tonykuz.findfilm.data.Entity.Film
 import com.tonykuz.findfilm.utils.AnimationHelper
 import com.tonykuz.findfilm.view.MainActivity
 import com.tonykuz.findfilm.view.rv_adapters.FilmListRecyclerAdapter

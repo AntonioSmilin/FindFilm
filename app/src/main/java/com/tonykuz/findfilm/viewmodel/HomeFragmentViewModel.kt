@@ -3,8 +3,9 @@ package com.tonykuz.findfilm.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.tonykuz.findfilm.App
-import com.tonykuz.findfilm.domain.Film
+import com.tonykuz.findfilm.data.Entity.Film
 import com.tonykuz.findfilm.domain.Interactor
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
 
@@ -27,7 +28,9 @@ class HomeFragmentViewModel : ViewModel() {
             }
 
             override fun onFailure() {
-                filmsListLiveData.postValue(interactor.getFilmsFromDB())
+                Executors.newSingleThreadExecutor().execute {
+                    filmsListLiveData.postValue(interactor.getFilmsFromDB())
+                }
             }
         })
     }

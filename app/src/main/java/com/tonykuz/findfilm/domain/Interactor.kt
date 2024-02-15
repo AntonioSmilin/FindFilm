@@ -1,5 +1,6 @@
 package com.tonykuz.findfilm.domain
 
+import androidx.lifecycle.LiveData
 import com.tonykuz.findfilm.data.*
 import com.tonykuz.findfilm.data.Entity.Film
 import com.tonykuz.findfilm.data.Entity.TmdbResultsDto
@@ -23,7 +24,10 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
             list.forEach {
                 repo.putToDb(list)
             }
-            callback.onSuccess(list)
+                callback.onSuccess()
+
+                //Версия до 41 модуля
+            //callback.onSuccess(list)
         }
 
             override fun onFailure(call: Call<TmdbResultsDto>, t: Throwable) {
@@ -39,5 +43,8 @@ class Interactor(private val repo: MainRepository, private val retrofitService: 
     //Метод для получения настроек
     fun getDefaultCategoryFromPreferences() = preferences.getDefaultCategory()
 
-    fun getFilmsFromDB(): List<Film> = repo.getAllFromDB()
+    fun getFilmsFromDB(): LiveData<List<Film>> = repo.getAllFromDB()
+
+        //Версия до 41 модуля
+        // fun getFilmsFromDB(): List<Film> = repo.getAllFromDB()
 }

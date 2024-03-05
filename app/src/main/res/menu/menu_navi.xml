@@ -2,6 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/home"
+        android:icon="@drawable/round_home"
+        android:title="@string/menu_home_title_text"/>
+    <item
         android:id="@+id/favorites"
         android:icon="@drawable/round_favorite"
         android:title="@string/menu_favorites_title"
@@ -15,5 +19,10 @@
         android:id="@+id/selections"
         android:icon="@drawable/round_podcasts"
         android:title="@string/menu_selections_title"
+        app:showAsAction="withText"/>
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/round_settings_24"
+        android:title="@string/menu_settings_title_text"
         app:showAsAction="withText"/>
 </menu>
